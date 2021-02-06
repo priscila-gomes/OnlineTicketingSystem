@@ -1,3 +1,3 @@
 # OnlineTicketingSystem
 
-Using .Net MVC with MSSQL
+Using C#, .Net MVC with MSSQL
