@@ -1,0 +1,44 @@
+﻿@model IEnumerable<OnlineTicketingSystem.Models.Chart>
+@{
+    ViewBag.Title = OnlineTicketingSystem.Resourses.Language.Reports;
+}
+
+<h2>@OnlineTicketingSystem.Resourses.Language.Reports</h2>
+<br /><br />
+      <form method="post">
+          <!-- action="/home/Chart" -->
+          <p>
+              <span style="font-weight:bold">@OnlineTicketingSystem.Resourses.Language.ChartType</span>&nbsp;&nbsp;&nbsp;
+              @OnlineTicketingSystem.Resourses.Language.ChartCol <input checked="checked" id="Chart" name="Chart" type="radio" value="Column" />&nbsp;
+              @OnlineTicketingSystem.Resourses.Language.ChartBar <input id="Chart" name="Chart" type="radio" value="Bar" />&nbsp;
+              @OnlineTicketingSystem.Resourses.Language.ChartPie <input id="Chart" name="Chart" type="radio" value="Pie" />&nbsp;
+              @OnlineTicketingSystem.Resourses.Language.ChartLine <input id="Chart" name="Chart" type="radio" value="Line" />&nbsp;&nbsp;
+              <input type="submit" value="Show" />
+          </p>
+          <p>
+              <span style="font-weight:bold">@OnlineTicketingSystem.Resourses.Language.ShowPer</span>&nbsp;&nbsp;&nbsp;
+              @OnlineTicketingSystem.Resourses.Language.Project <input checked="checked" id="ShowType" name="ShowType" type="radio" value="ProjectTitle" />&nbsp;
+              @OnlineTicketingSystem.Resourses.Language.Department <input id="ShowType" name="ShowType" type="radio" value="DeptName" />&nbsp;
+              @OnlineTicketingSystem.Resourses.Language.Employee <input id="ShowType" name="ShowType" type="radio" value="EmpName" />&nbsp;
+              @OnlineTicketingSystem.Resourses.Language.Status <input id="ShowType" name="ShowType" type="radio" value="Status" />&nbsp;
+              @OnlineTicketingSystem.Resourses.Language.Year <input id="ShowType" name="ShowType" type="radio" value="Year" />
+          </p>
+      </form>
+          <div>
+                @{
+                  if (IsPost)
+                  {
+                      string chartType = Request.Form["Chart"];
+                      string showType = Request.Form["ShowType"];
+
+                      var chart = new Chart(width: 500, height: 500, theme: ChartTheme.Blue)
+                                      .AddTitle(OnlineTicketingSystem.Resourses.Language.ChartTitle)
+                                      .AddSeries("Default", chartType: @chartType, //"column",
+                                                  xValue: Model, xField: @showType,//"ProjectTitle",
+                                                  yValues: Model, yFields: "TotTickets")
+                                      .Write();
+                   }
+                }
+              </div>
+
+

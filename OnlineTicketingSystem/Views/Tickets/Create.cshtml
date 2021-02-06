@@ -1,0 +1,114 @@
+﻿@model OnlineTicketingSystem.Models.Ticket
+
+@{
+    ViewBag.Title = OnlineTicketingSystem.Resourses.Language.Create;
+}
+
+<h2>@OnlineTicketingSystem.Resourses.Language.Create</h2>
+
+
+@using (Html.BeginForm("Create", "Tickets",FormMethod.Post, new { id = "frmCreateTicket" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>@OnlineTicketingSystem.Resourses.Language.Ticket</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.SubmitDate, new { @Value = System.DateTime.Now })
+    @Html.HiddenFor(model => model.Status, new { @Value = "O" })
+<div class="form-group">
+    <!--@Html.LabelFor(model => model.ProjectRefId, "Project", htmlAttributes: new { @class = "control-label col-md-2" })-->
+    @Html.LabelFor(model => model.ProjectRefId, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownList("ProjectRefId", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.ProjectRefId, "", new { @class = "text-danger" })
+    </div>
+</div>
+    <div class="form-group">
+        <!--@Html.LabelFor(model => model.DeptRefId, "Department", htmlAttributes: new { @class = "control-label col-md-2" })-->
+        @Html.LabelFor(model => model.DeptRefId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <!--@Html.DropDownList("DeptRefId", null, htmlAttributes: new { @class = "form-control" })-->
+            @Html.DropDownList("DeptRefId", null, "--Select Department--", htmlAttributes: new
+            {
+                @class = "form-control",
+           id = "ddlDept"
+       })
+            @Html.ValidationMessageFor(model => model.DeptRefId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @* Comment goes here *@
+<div class="form-group">
+    <!--@Html.LabelFor(model => model.EmpRefId, "Requested By", htmlAttributes: new { @class = "control-label col-md-2" })-->
+    @Html.LabelFor(model => model.EmpRefId, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <!--@Html.DropDownList("EmpRefId", null, htmlAttributes: new { @class = "form-control" })-->
+        @Html.DropDownList("EmpRefId", null, "--Select Employee--", htmlAttributes: new { @class = "form-control", id = "ddlEmp" })
+        @Html.ValidationMessageFor(model => model.EmpRefId, "", new { @class = "text-danger" })
+    </div>
+</div>
+    <script language="JavaScript" type="text/javascript" src="../Scripts/jquery-3.5.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#ddlDept").change(function () {
+                var deptId = $(this).val();
+                var select = $("#ddlEmp");
+                select.empty();
+                select.append($('<option/>', {
+                    value: "", //0,
+                    text: "--Select Employee--"
+                }));
+                //alert("deptId = " + deptId);
+                $.getJSON("../Tickets/getEmployee", { DeptRefId: deptId },
+                    function (classesData) {
+                        /*var select = $("#ddlEmp");
+                        select.empty();
+                        select.append($('<option/>', {
+                            value: 0,
+                            text: "--Select Employee--"
+                        }));*/
+                        $.each(classesData, function (index, itemData) {
+                            //alert(classesData);
+                            //alert(itemData);
+                            select.append($('<option/>', {
+                                value: itemData.Value,
+                                text: itemData.Text
+                            }));
+                        });
+                    });
+            });
+        });
+    </script>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <!--@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })-->
+            @Html.TextAreaFor(model => model.Description, 10, 40, null)
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <!--<div class="form-group">
+        @Html.LabelFor(model => model.SubmitDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SubmitDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SubmitDate, "", new { @class = "text-danger" })
+        </div>
+    </div>-->
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Back, "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

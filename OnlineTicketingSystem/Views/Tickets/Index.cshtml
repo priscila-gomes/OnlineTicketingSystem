@@ -1,0 +1,77 @@
+﻿@model IEnumerable<OnlineTicketingSystem.Models.Ticket>
+
+@{
+    ViewBag.Title = OnlineTicketingSystem.Resourses.Language.Home;
+}
+
+<h2>@OnlineTicketingSystem.Resourses.Language.Home</h2>
+
+<p>
+    @Html.ActionLink(OnlineTicketingSystem.Resourses.Language.New, "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            <!--@Html.ActionLink(Html.DisplayNameFor(model => model.Department.DeptName).ToHtmlString(), "Index", new { sortOrder = ViewBag.DeptSortParm })-->
+            @Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Department, "Index", new { sortOrder = ViewBag.DeptSortParm })
+            <!--@Html.DisplayNameFor(model => model.Department.DeptName)-->
+        </th>
+        <th>
+            <!--@Html.ActionLink(Html.DisplayNameFor(model => model.Employee.EmpName).ToHtmlString(), "Index", new { sortOrder = ViewBag.EmpSortParm })-->
+            @Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Employee, "Index", new { sortOrder = ViewBag.EmpSortParm })
+        </th>
+        <th>
+            <!--@Html.ActionLink(Html.DisplayNameFor(model => model.Project.ProjectTitle).ToHtmlString(), "Index", new { sortOrder = ViewBag.ProjSortParm })-->
+            @Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Project, "Index", new { sortOrder = ViewBag.ProjSortParm })
+        </th>
+        <th>
+            <!--@Html.ActionLink(Html.DisplayNameFor(model => model.Description).ToHtmlString(), "Index", new { sortOrder = ViewBag.DesSortParm })-->
+            @Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Description, "Index", new { sortOrder = ViewBag.DesSortParm })
+        </th>
+        <th>
+            <!--@Html.ActionLink(Html.DisplayNameFor(model => model.SubmitDate).ToHtmlString(), "Index", new { sortOrder = ViewBag.DateSortParm })-->
+            @Html.ActionLink(OnlineTicketingSystem.Resourses.Language.SubmitDate, "Index", new { sortOrder = ViewBag.DateSortParm })
+        </th>
+        <th>
+            <!--@Html.ActionLink(Html.DisplayNameFor(model => model.Status).ToHtmlString(), "Index", new { sortOrder = ViewBag.StatusSortParm })-->
+            @Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Status, "Index", new { sortOrder = ViewBag.StatusSortParm })
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Department.DeptName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Employee.EmpName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Project.ProjectTitle)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.SubmitDate)
+    </td>
+    <td>
+        @if (item.Status == "O")
+        {
+            <span>Open</span>
+        }
+        else if (item.Status == "C")
+        {
+            <span>Close</span>
+        }
+    </td>
+    <td>
+        @Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Edit, "Edit", new { id = item.TicketId }) |
+        @Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Details, "Details", new { id = item.TicketId }) |
+        @Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Delete, "Delete", new { id = item.TicketId })
+    </td>
+</tr>
+}
+
+</table>

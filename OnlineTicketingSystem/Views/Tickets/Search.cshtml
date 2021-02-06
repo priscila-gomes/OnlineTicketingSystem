@@ -1,0 +1,118 @@
+﻿@model IEnumerable<OnlineTicketingSystem.Models.Ticket>
+
+@{
+    ViewBag.Title = OnlineTicketingSystem.Resourses.Language.Search;
+}
+
+<h2>@OnlineTicketingSystem.Resourses.Language.Search</h2>
+
+<br />
+<br />
+<form method="post">
+    <p>
+        <span style="font-weight:bold">@OnlineTicketingSystem.Resourses.Language.SearchBy</span>&nbsp;&nbsp;&nbsp;
+        @OnlineTicketingSystem.Resourses.Language.Project <input checked="checked" id="Search" name="Search" type="radio" value="ProjectTitle" />&nbsp;
+        @OnlineTicketingSystem.Resourses.Language.Department <input id="Search" name="Search" type="radio" value="DeptName" />&nbsp;
+        @OnlineTicketingSystem.Resourses.Language.Employee <input id="Search" name="Search" type="radio" value="EmpName" />&nbsp;
+        @OnlineTicketingSystem.Resourses.Language.Description <input id="Search" name="Search" type="radio" value="Desc" />&nbsp;
+        <!--Status &nbsp; <input id="Search" name="Search" type="radio" value="Status" />-->
+        @OnlineTicketingSystem.Resourses.Language.SubmitDate <input id="Search" name="Search" type="radio" value="Date" />&nbsp;&nbsp;
+        @*@OnlineTicketingSystem.Resourses.Language.Search*@<input type="text" id="SearchString" name="SearchString" />&nbsp;&nbsp;
+        <input type="submit" value="Search" />
+
+        <!--<table>
+        <tr>
+            <th>
+                Search By:
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>@OnlineTicketingSystem.Resourses.Language.Project</td>
+            <td><input checked="checked" id="Search" name="Search" type="radio" value="ProjectTitle" /></td>
+            <td>@OnlineTicketingSystem.Resourses.Language.Department</td>
+            <td><input id="Search" name="Search" type="radio" value="DeptName" /></td>
+            <td>@OnlineTicketingSystem.Resourses.Language.Employee</td>
+            <td><input id="Search" name="Search" type="radio" value="EmpName" /></td>
+            <td>@OnlineTicketingSystem.Resourses.Language.Description</td>
+            <td><input id="Search" name="Search" type="radio" value="Desc" /></td>
+            <td>@OnlineTicketingSystem.Resourses.Language.SubmitDate</td>
+            <td><input id="Search" name="Search" type="radio" value="Date" /></td>
+        </tr>
+    </table>-->
+    </p>
+</form>
+<table class="table">
+    <tr>
+        <th>
+            @*@Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Department, "Index", new { sortOrder = ViewBag.DeptSortParm })*@
+            @OnlineTicketingSystem.Resourses.Language.Department
+            <!--@Html.DisplayNameFor(model => model.Department.DeptName)-->
+        </th>
+        <th>
+            @*@Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Employee, "Index", new { sortOrder = ViewBag.EmpSortParm })*@
+            @OnlineTicketingSystem.Resourses.Language.Employee
+        </th>
+        <th>
+            @*@Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Project, "Index", new { sortOrder = ViewBag.ProjSortParm })*@
+            @OnlineTicketingSystem.Resourses.Language.Project
+        </th>
+        <th>
+            @*@Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Description, "Index", new { sortOrder = ViewBag.DesSortParm })*@
+            @OnlineTicketingSystem.Resourses.Language.Description
+        </th>
+        <th>
+            @*@Html.ActionLink(OnlineTicketingSystem.Resourses.Language.SubmitDate, "Index", new { sortOrder = ViewBag.DateSortParm })*@
+            @OnlineTicketingSystem.Resourses.Language.SubmitDate
+        </th>
+        <th>
+            @*@Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Status, "Index", new { sortOrder = ViewBag.StatusSortParm })*@
+            @OnlineTicketingSystem.Resourses.Language.Status
+        </th>
+        <th></th>
+    </tr>
+
+    @{
+        if (IsPost)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department.DeptName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Employee.EmpName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Project.ProjectTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SubmitDate)
+                    </td>
+                    <td>
+                        @if (item.Status == "O")
+                        {
+                            <span>Open</span>
+                        }
+                        else if (item.Status == "C")
+                        {
+                            <span>Close</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Edit, "Edit", new { id = item.TicketId }) |
+                        @Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Details, "Details", new { id = item.TicketId }) |
+                        @Html.ActionLink(OnlineTicketingSystem.Resourses.Language.Delete, "Delete", new { id = item.TicketId })
+                    </td>
+                </tr>
+                }
+
+            }
+        }
+
+        </table>
